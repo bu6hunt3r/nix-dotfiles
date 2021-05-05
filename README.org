@@ -3,5 +3,5 @@
 * My NixOS dotfiles
 
 #+begin_src shell
-nix build '.#nixosConfigurations.nixos-desktop.config.system.^Cild.toplevel'
+nix build '.#nixosConfigurations.nixos-desktop.config.system.build.toplevel'
 #+end_src
