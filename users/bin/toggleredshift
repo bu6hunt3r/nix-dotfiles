@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+if [ -f /tmp/redshifttoggle.lock ]
+then
+	redshift -x
+	rm /tmp/redshifttoggle.lock
+else
+	redshift -O 3500
+	touch /tmp/redshifttoggle.lock
+fi

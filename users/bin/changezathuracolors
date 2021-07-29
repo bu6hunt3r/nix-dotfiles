@@ -1,0 +1,67 @@
+#!/usr/bin/env sh
+
+. "${HOME}/.cache/wal/colors.sh"
+alias bemenu='bemenu --tf "$background" --fb "$background" --hf "$background" --nb "$background" --sb "$background" --scb "$background" --tb "$foreground" --ff "$foreground"  --nf "$foreground"  --hb "$foreground"  --sf "$foreground"  --scf "$foreground" --fn "sans 9.5" -b --scrollbar auto'
+
+setmonochrome() {
+	sed -i '1s/.*/set\ recolor-darkcolor\ \\\#000000/' ${HOME}/.config/zathura/zathuracolors
+	sed -i '2s/.*/set\ recolor-lightcolor\ \\\#FFFFFF/' ${HOME}/.config/zathura/zathuracolors
+}
+
+setscolarizeddark() {
+	sed -i '1s/.*/set\ recolor-darkcolor\ \\\#FDF6E3/' ${HOME}/.config/zathura/zathuracolors
+	sed -i '2s/.*/set\ recolor-lightcolor\ \\\#002B36/' ${HOME}/.config/zathura/zathuracolors
+}
+
+setscolarizedlight() {
+	sed -i '1s/.*/set\ recolor-darkcolor\ \\\#002B36/' ${HOME}/.config/zathura/zathuracolors
+	sed -i '2s/.*/set\ recolor-lightcolor\ \\\#FDF6E3/' ${HOME}/.config/zathura/zathuracolors
+}
+
+setsepia() {
+	sed -i '1s/.*/set\ recolor-darkcolor\ \\\#000000/' ${HOME}/.config/zathura/zathuracolors
+	sed -i '2s/.*/set\ recolor-lightcolor\ \\\#EFE0B9/' ${HOME}/.config/zathura/zathuracolors
+}
+
+setgrey() {
+	sed -i '1s/.*/set\ recolor-darkcolor\ \\\#000000/' ${HOME}/.config/zathura/zathuracolors
+	sed -i '2s/.*/set\ recolor-lightcolor\ \\\#CCCCCC/' ${HOME}/.config/zathura/zathuracolors
+}
+
+setnight() {
+	sed -i '1s/^/#/;2s/^/#/' ~/.config/zathura/zathuracolors
+}
+
+setsystem() {
+	sed -i "1s/.*/set\ recolor-darkcolor\ \"${foreground}\"/" ${HOME}/.config/zathura/zathuracolors
+	sed -i "2s/.*/set\ recolor-lightcolor\ \"${background}\"/" ${HOME}/.config/zathura/zathuracolors
+}
+
+#sed -i '1s/^\s*#//;2s/^\s*#//;t;1s/^/#/;2s/^/#/' ~/.config/zathura/zathuracolors
+
+
+list='Monochrome\nGrey\nSepia\nSystem\nScolarizedDark\nScolarizedLight\nNight\n'
+theme=$(printf ${list} | bemenu -i -l $(printf ${list} | wc -l) -p 'Choose a secondary theme: ')
+[ -z $theme ] && exit
+case $theme in
+	Monochrome) setmonochrome;;
+	Sepia) setsepia;;
+	Night) setnight;;
+	Grey) setgrey;;
+	ScolarizedDark) setscolarizeddark;;
+	ScolarizedLight) setscolarizedlight;;
+	System) setsystem;;
+esac
+FILE="$*"
+TYPE=$(echo ${FILE} | sed -r 's/(\/tmp\/)(.*)(pdfmanual\.pdf)/\1\3/')
+if [ "$TYPE" = "/tmp/pdfmanual.pdf" ]
+then
+	cp "$FILE" /tmp/changezathuracolorsbuffer
+	pkill -f "zathura .*${FILE}" && sleep 0.5
+	mv /tmp/changezathuracolorsbuffer "$FILE"
+	zathura -- "$FILE"
+	rm "$FILE"
+else
+	pkill -f "zathura .*${FILE}"
+	zathura -- "${FILE}"
+fi

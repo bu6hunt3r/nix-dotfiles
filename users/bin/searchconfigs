@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+configname=$(find ~/ -type f | fzf)
+[ -z "$configname" ] && exit
+$EDITOR "$configname"

@@ -1,0 +1,104 @@
+#!/usr/bin/env python3
+import subprocess, re, os, sys
+from getpass import getuser
+
+def getmount():
+    alreadymounted=subprocess.check_output('lsblk -nrpo "mountpoint"',shell=True,text=True)
+    alreadymounted=re.sub('^(|\/|\[SWAP\])$\n','',alreadymounted,flags=re.M).strip()
+    if alreadymounted != '':
+        extraflags=''
+        for i in alreadymounted.split('\n'):
+            extraflags = extraflags + f' -not -path {i} -prune'
+        filecmd=f'find /mnt /home -maxdepth 5 -type d{extraflags}'
+    else:
+        filecmd='find /mnt /home -maxdepth 5 -type d'
+    mountpoint=subprocess.check_output(f'{filecmd} | {bemenucmd} -p "Choose Mountpoint:" ',shell=True,text=True).strip()
+    if mountpoint is None:
+        exit ()
+    return mountpoint
+
+def mountusb():
+    chosen=subprocess.Popen(f'{bemenucmd} -p "Choose USB device:"',shell=True,text=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE).communicate(usbdrives)[0].strip().split()[0]
+    if chosen is None:
+        exit ()
+    mount=subprocess.run(f'sudo -A mount "{chosen}"',shell=True)
+    if mount.returncode == 0:
+        subprocess.run(f'notify-send "💻 USB mounting" "{chosen} mounted."',shell=True)
+        exit()
+    else:
+        mountpoint=getmount()
+        partitiontype=subprocess.check_output(f'lsblk -no "fstype" "{chosen}"',shell=True,text=True).strip()
+        if partitiontype=='vfat':
+            mount=subprocess.run(f'sudo -A mount -t vfat "{chosen}" "{mountpoint}" -o rw,umask=0000',shell=True)
+        else:
+            ug=subprocess.check_output('groups').split()[0]
+            user=getuser()
+            mount=subprocess.run(f'sudo -A mount "{chosen}" "{mountpoint}"; sudo -A chown "{user}":"{ug}" 741 "{mountpoint}"',shell=True)
+        if mount.returncode == 0:
+            subprocess.run(f'notify-send "💻 USB mounting" "{chosen} mounted to {mountpoint}"',shell=True)
+        else:
+            subprocess.run(f'notify-send "⛔ USB mounting" "Failed to mount {chosen} to {mountpoint}"',shell=True)
+
+def mountandroid():
+    chosen=subprocess.Popen(f'{bemenucmd} -p "Choose Android device:"',shell=True,text=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE).communicate(anddrives)[0].strip()
+    if chosen is None:
+        exit ()
+    chosen=re.sub('(\w+\, \w+)\,.*',r'\1',chosen)
+    mountpoint=getmount()
+    subprocess.run(f'echo "OK" | {bemenucmd} -p "Allow File Transfer on your Phone Screen"',shell=True)
+    mount=subprocess.run(f'sudo jmtpfs -device="{chosen}" -o allow_other "{mountpoint}"',shell=True)
+    if mount.returncode == 0:
+        subprocess.run(f'notify-send "🤖 Android Mounting" "Android mounted to {mountpoint}"',shell=True)
+    else:
+        subprocess.run(f'notify-send "⛔ Android Mounting" "Failed to mount Android to {mountpoint}"',shell=True)
+
+def mountcd():
+    mountpoint=getmount()
+    mount=subprocess.run(f'sudo -A mount "/dev/sr0" "{mountpoint}"',shell=True)
+    if mount.returncode == 0:
+        subprocess.run(f'notify-send "💿 CD mounting" "CD mounted to {mountpoint}"',shell=True)
+    else:
+        subprocess.run(f'notify-send "⛔ CD mounting" "Failed to mount CD to {mountpoint}"',shell=True)
+
+sys.path.append(os.path.expanduser("~") + '/.cache/wal')
+from colorspython import *
+bemenucmd = f'bemenu --tf "{background}" --fb "{background}" --hf "{background}" --nb "{background}" --sb "{background}" --scb "{background}" --tb "{foreground}" --ff "{foreground}" --nf "{foreground}" --hb "{foreground}" --sf "{foreground}" --scf "{foreground}" --fn "sans 9.5" -b --scrollbar auto -i'
+
+anddrives=subprocess.check_output('jmtpfs -l',shell=True, text=True)
+anddrives=re.sub(r'.*\n?Available devices.*\n','', anddrives)
+drives=''
+if anddrives != '':
+    drives=drives+'Android\n'
+
+usbdrives=subprocess.check_output('lsblk -nrpo "name,type,size,mountpoint"',shell=True,text=True)
+usbdrives=re.sub('^.+ ((?!part).+ .+ $|.+ .+ .+$)\n','',usbdrives,flags=re.M).replace('part','')
+if usbdrives != '':
+    drives=drives+'USB\n'
+
+try:
+    cddrives=subprocess.check_output('blkid /dev/sr0',shell=True,text=True)
+    cddrives=re.sub(':.*','',cddrives)
+except:
+    cddrives=''
+
+if cddrives != '':
+    drives=drives+'CD\n'
+
+number = len(drives.split())
+if number == 0:
+    subprocess.run('notify-send "No USB drive or Android device or CD detected"',shell=True)
+elif number == 1:
+    if drives.strip() == 'USB':
+        mountusb()
+    elif drives.strip() == 'Android':
+        mountandroid()
+    elif drives.strip() == 'CD':
+        mountcd()
+else:
+    driveType=subprocess.Popen(f'{bemenucmd} -p "Choose device type to mount:"',shell=True,text=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE).communicate(drives)[0].strip()
+    if driveType == 'USB':
+        mountusb()
+    elif driveType == 'Android':
+        mountandroid()
+    elif driveType == 'CD':
+        mountcd()

@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "${HOME}/.cache/wal/colors.sh"
+alias bemenu='bemenu --tf "$background" --fb "$background" --hf "$background" --nb "$background" --sb "$background" --scb "$background" --tb "$foreground" --ff "$foreground"  --nf "$foreground"  --hb "$foreground"  --sf "$foreground"  --scf "$foreground" --fn "sans 9.5" -b -i --scrollbar always'
+
+format="%album% // %artist% - %track% - %title%"
+mpc -q update
+song=$(mpc listall -f "$format" | bemenu -p 'change song: ' -l 20)
+[ -z "$song" ] && exit
+echo $song
+songnumber=$(mpc listall -f "$format" | grep -n -F -x "${song}" | cut -d : -f 1)
+mpc -q clear
+mpc -q random on
+mpc add / && mpc play "$songnumber"

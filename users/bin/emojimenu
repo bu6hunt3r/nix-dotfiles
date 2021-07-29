@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+xclip -h >/dev/null || exit
+
+. "${HOME}/.cache/wal/colors.sh"
+alias bemenu='bemenu --tf "$background" --fb "$background" --hf "$background" --nb "$background" --sb "$background" --scb "$background" --tb "$foreground" --ff "$foreground"  --nf "$foreground"  --hb "$foreground"  --sf "$foreground"  --scf "$foreground" --fn "sans 9.5" -b --scrollbar always'
+
+chosen=$(grep -hv "#" ~/.config/emoji ~/.config/fontawesome | bemenu -i -l 20 -p 'choose a unicode character: ')
+
+[ -z "$chosen" ] && exit
+
+c=$(echo "$chosen" | sed "s/ .*//")
+echo "$c" | tr -d '\n' | xclip -selection clipboard
+notify-send "'$c' copied to clipboard." &
+
+s=$(echo "$chosen" | sed "s/.*; //" | awk '{print $1}')
+echo "$s" | tr -d '\n' | xclip
+notify-send "'$s' copied to primary." &

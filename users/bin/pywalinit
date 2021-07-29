@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+import sys, subprocess, os, logging
+
+HOME=os.path.expanduser('~')
+
+
+def extracolor():
+    extra1=color16
+    extra2=color17
+    f=open(f'{HOME}/.cache/wal/colors.Xresources','a')
+    f.write(f'*lighter :{extra1}\n*darker :{extra2}\n')
+    f.close()
+    f=open(f'{HOME}/.cache/wal/colorspython.py','a')
+    f.write(f'color16=\'{extra1}\'\ncolor17=\'{extra2}\'\n')
+    f.close()
+    f=open(f'{HOME}/.cache/wal/colors.css','r')
+    contents=f.readlines()
+    f.close()
+    contents.insert(len(contents)-1,f'    --color16: {extra1};\n')
+    contents.insert(len(contents)-1,f'    --color17: {extra2};\n')
+    f=open(f'{HOME}/.cache/wal/colors.css','w')
+    f.writelines(contents)
+    f.close()
+
+
+sys.path.append(f'{HOME}/.cache/wal')
+from colorspython import *
+
+f=open(f'{HOME}/.cache/wal/args','r')
+args=f.readlines()[0]
+f.close()
+
+process=subprocess.Popen(['feh','--bg-fill',wallpaper])
+process=subprocess.run(f'wal -n -e -R {args}',shell=True)
+
+extracolor()
+
+f=open(f'{HOME}/.cache/wal/colorspython.py','a')
+f.write(f'wallpaper=\'{wallpaper}\'\n')
+f.close()
+
+subprocess.run(['xrdb',f'{HOME}/.cache/wal/colors.Xresources'])
+subprocess.Popen(['i3-msg','-q','reload'])
