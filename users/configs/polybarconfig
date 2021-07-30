@@ -1,9 +1,11 @@
 [colors]
 background = #222
 foreground = #eee
-linecolor = #fba922
-bordercolor = #333
+;linecolor = #fba922
+;bordercolor = #333
 accent = #e60053
+bordercolor = #d64937
+linecolor = #d64937
 
 [settings]
 screenchange-reload = true
@@ -32,9 +34,9 @@ tray-padding = 4
 
 dpi = 220
 enable-ipc = true
-monitor = ${env:MONITORPRIMARY:DP-2}
+monitor = ${env:MONITOR1:}
 width = 100%
-height = 32
+height = 28
 ;radius = 5.0
 ;fixed-center = false
 ;override-redirect = true
@@ -76,7 +78,7 @@ font-2 = "Font Awesome 5 Brands:style=Solid:size=6;1"
 modules-left = i3
 ;modules-center = player-mpv-tail
 ;modules-right = mediacontrol brightnesscustom volume battery memory cpu wifi vpncheck updates date
-modules-right = volume fs-root bspwm memory cpu date
+modules-right = volume fs-root memory cpu date
 
 wm-restack = bspwm
 
@@ -97,8 +99,9 @@ bspwm-focused-overline = ${colors.linecolor}
 bspwm-focused-underline = #cc333333
 
 [bar/top-secondary]
+dpi = 220
 enable-ipc = true
-monitor = ${env:MONITORSECONDARY:DP-3}
+monitor = ${env:MONITOR2:}
 width = 100%
 height = 28
 ;radius = 5.0
@@ -134,10 +137,10 @@ module-margin-right = 2
 
 # Description - fonts determined via fc-match
 #font-0 = "Hack:size=4;1"
-font-0 = "Noto Sans:size=9;1"
+font-0 = "Noto Sans:size=5;1"
 # Symbols
-font-1 = "Font Awesome 5 Free:style=Solid:size=9;1"
-font-2 = "Font Awesome 5 Brands:style=Solid:size=9;1"
+font-1 = "Font Awesome 5 Free:style=Solid:size=6;1"
+font-2 = "Font Awesome 5 Brands:style=Solid:size=6;1"
 
 
 

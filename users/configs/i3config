@@ -4,7 +4,7 @@
 set $mod Mod4
 
 # set wallpaper
-#exec_always --no-startup-id feh --bg-scale ~/.config/i3/arch.png
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/darkwing.jpg
 # exec_always --no-startup-id feh --bg-scale ~/Pictures/arch_bg2.png
 
 # launch conky
@@ -169,43 +169,29 @@ bindsym $mod+r mode "resize"
 #     tray_output primary
 # }
 
-client.focused          #166CDD #166CDD #EEEEEE #2e9ef4   #166CDD
-#client.focused_inactive #555555 #555555 #EEEEEE #484e50   #555555
-#client.unfocused        #555555 #555555 #EEEEEE #484e50   #555555
-#client.urgent           #F41D1D #F41D1D #EEEEEE #900000   #F41D1D
-#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+# Theme colors
+# set variable for main accent color
+set $acolor #d64937
 
-#client.background       #ffffff
+# set other colors
+set $bgicolor #525859
+set $bgucolor #323838
+set $txtacolor #F9FAF9
+set $txtucolor #bdbbbb
+set $indcolor #4deb56
+set $border_no_name border pixel 3
+set $border_normal border normal 3
 
-# Custom colors
-set_from_resource $black       color8  #000000
-set_from_resource $darkblack   color0  #000000
-set_from_resource $darkred     color1  #000000
-set_from_resource $red         color9  #000000
-set_from_resource $darkgreen   color2  #000000
-set_from_resource $green       color10 #000000
-set_from_resource $darkyellow  color3  #000000
-set_from_resource $yellow      color11 #000000
-set_from_resource $darkblue    color4  #000000
-set_from_resource $blue        color12 #000000
-set_from_resource $darkmagenta color5  #000000
-set_from_resource $magenta     color13 #000000
-set_from_resource $darkcyan    color6  #000000
-set_from_resource $cyan        color14 #000000
-set_from_resource $white       color7  #000000
-set_from_resource $darkwhite   color15 #000000
+# class                   border  backgr. text    indic.   child_border
+client.focused          $acolor $acolor $txtacolor $indcolor $acolor
+client.focused_inactive $bgicolor $bgicolor $txtacolor $indcolor $bgicolor
+client.unfocused        $bgucolor $bgucolor $txtucolor $indcolor $bgucolor
+client.urgent           #CB4B16 #FDF6E3 #CB4B16 $indcolor
+client.placeholder      #000000 #0c0c0c $txtacolor #000000
+client.background       #2B2C2B
 
-set $background  #000000
-set $darkblack   #10151b
-
-# Window colors           border       background   text            indicator    child_border
-client.focused            $darkred     $darkblack   $darkwhite      $darkblack  $darkblack
-client.focused_inactive   $darkblack   $darkblack   $white          $darkblack  $darkblack
-client.unfocused          $darkblack   $darkblack   $white          $darkblack  $darkblack
-client.urgent $darkblue   $darkblue    $white       $darkblack      $darkblack  $darkblack
-
-# for_window [class="^.*"] border pixel 0
-# gaps inner 20
+for_window [class="^.*"] border pixel 0
+gaps inner 20
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
@@ -239,7 +225,7 @@ default_floating_border normal 2px
 # exec_always --no-startup-id picom -b
 
 # Polybar
-# exec_always --no-startup-id 
+exec_always --no-startup-id ~/.config/polybar/polybar.sh
 
 # autostart redshift
 # exec --no-startup-id redshift

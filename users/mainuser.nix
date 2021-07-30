@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   inherit (import ../variables.nix) nixosConfigDir mainUser;
@@ -19,6 +19,110 @@ in
     source ${nixosConfigDir}/users/configs/zshrc
   '';
 
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    newSession = false;
+    plugins = with pkgs; [
+      {
+        plugin = tmuxPlugins.fingers;
+        extraConfig = ''
+        # Prevent tmux from renaming the tab when processes change
+        set-option -g allow-rename off
+
+        # Set base to 1
+        set -g base-index 1
+        # Start index of window/pane with 1, because we're humans, not computers
+        setw -g pane-base-index 1
+
+        # Enable UTF-8 support in status bar
+        set -g status on
+
+        # Increase scrollback lines
+        set -g history-limit 30000
+
+        set-option -g renumber-windows on
+
+        # see: toggle on/off all keybindings · Issue #237 · tmux/tmux - https://github.com/tmux/tmux/issues/237
+        # Also, change some visual styles when window keys are off
+        bind -T root F12  \
+        set prefix None \;\
+        set key-table off \;\
+        #set status-style "fg=$color_status_text,bg=$color_window_off_status_bg" \;\
+        #set window-status-current-format "#[fg=$color_window_off_status_bg,bg=$color_window_off_status_current_bg]$separator_powerline_right#[default] #I:#W# #[fg=$color_window_off_status_current_bg,bg=$color_window_off_status_bg]$separator_powerline_right#[default]" \;\
+        #set window-status-current-style "fg=$color_dark,bold,bg=$color_window_off_status_current_bg" \;\
+        if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+        refresh-client -S \;\
+
+        bind -T off F12 \
+	set -u prefix \;\
+	set -u key-table \;\
+	set -u status-style \;\
+	set -u window-status-current-style \;\
+  	set -u window-status-current-format \;\
+  	refresh-client -S
+
+        unbind C-b
+	set -g prefix C-a
+	bind C-a send-prefix
+
+	bind-key p last-window
+
+	bind h select-pane -L
+	bind j select-pane -D
+	bind k select-pane -U
+	bind l select-pane -R
+
+	set-window-option -g mode-keys vi
+
+	bind-key Escape copy-mode			# enter copy mode; default [
+	bind-key -T copy-mode-vi 'v' send -X begin-selection
+	bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+	bind-key -T copy-mode-vi 'V' send-keys -X select-line
+	bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+	bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -selection clipboard"
+
+	bind-key y split-window -h
+	bind-key x split-window -v
+
+	bind-key g command-prompt -p "join pane from:"  "join-pane -s ':%%'"
+	bind-key s command-prompt -p "send pane to:"  "join-pane -t ':%%'"
+
+	bind-key Left resize-pane -L 5
+	bind-key Right resize-pane -R 5
+	bind-key Up resize-pane -U 5
+	bind-key Down resize-pane -D 5
+	bind-key = select-layout even-vertical
+	bind-key | select-layout even-horizontal
+
+	# ditched m which had select-pane -m
+	# this place a stronger visual cue on the selected pane
+	# add bind for mouse support toggle needs tmux 2.2
+	bind-key m set -g mouse
+
+	bind-key - set status
+
+	# The panes
+	set-window-option -g pane-active-border-style 'fg=red'
+	set-window-option -g pane-border-style 'fg=#121212'
+
+	# The statusbar
+	set -g status-interval 30
+	set -g status-position bottom
+	set -g status-bg colour235
+	set -g status-fg colour255
+
+	#set -g status-justify centre
+	set -g status-justify left
+        set -g @fingers-key F
+	set -g @fingers-pattern-0 '0x([0-9a-f]+)'
+	set -g @fingers-copy-command 'xclip -selection clipboard'
+        run-shell ${pkgs.tmuxPlugins.fingers}/share/tmux-plugins/fingers/tmux-fingers.tmux
+        '';
+      }
+    ];
+  };
+
   xdg.userDirs = {
     download = "\$HOME/downloads";
     desktop = "\$HOME";
@@ -36,31 +140,8 @@ in
       alsaSupport=true;
       iwSupport=true;
     };
-    config = {
-      "bar/top" = {
-        monitor = "DP-2";
-        width = "100%";
-        height = "3%";
-        radius = 0;
-        # Just sticking them together in the center for now
-        modules-center = "date i3";
-      };
-      "module/date" = {
-        type = "internal/date";
-        internal = 5;
-        date = "%Y-%m-%d";
-        time = "%H:%M";
-        label = "%date% %time%";
-      };
-      "module/i3" = {
-        type = "internal/i3";
-        scroll-up = "i3wm-wsnext";
-        scroll-down = "i3wm-wsprev";
-      };
-    };
-    script = ''
-      polybar top &
-    '';
+    config = ./configs/polybarconfig;
+    script="";
   };
 
   xdg.configFile = {
@@ -73,6 +154,8 @@ in
     "homepage/index.html".text= builtins.replaceStrings ["mainUser"] ["${mainUser}"] (builtins.readFile ./configs/homepage.html);
     "homepage/style.css".text= builtins.replaceStrings ["mainUser"] ["${mainUser}"] (builtins.readFile ./configs/homepage.css);
     "i3/config".source = ./configs/i3config;
+    "i3/darkwing.jpg".source = ./configs/darkwing.jpg;
+    "polybar/polybar.sh".source = ./configs/polybar.sh;
     "i3blocks/config".source = ./configs/i3blocksconfig;
     "kitty/kitty.conf".source = ./configs/kitty.conf;
     "mutt/mutt-wizard.muttrc".source = (builtins.toPath "${pkgs.mutt-wizard}/share/mutt-wizard.muttrc");
@@ -83,7 +166,6 @@ in
     "ncmpcpp/bindings".source = ./configs/ncmpcppbindings;
     "ncmpcpp/config".source = ./configs/ncmpcppconfig;
     "newsboat/config".source = ./configs/newsboatconfig;
-    #"polybar/config".source = ./configs/polybarconfig;
     "nixpkgs/config.nix".source = ../pkgs/nixpkgs-config.nix;
     "qutebrowser/config.py".source= ./configs/qutebrowser.py;
     "qutebrowser/darksheet.css".source= ./configs/darksheet.css;
@@ -121,8 +203,11 @@ in
     ".local/bin".source = ./bin;
     "dox/latex/templates/article.tex".source = ./share/templates/article.tex;
     "dox/latex/templates/presentation.tex".source = ./share/templates/presentation.tex;
+    #".tmux.conf".source = ./configs/tmux.conf;
     ".xinitrc".source = ./configs/xinitrc;
     ".calcurse/conf".source= ./configs/calcurseconf;
+    ".zsh_plugins".source= ./configs/zsh_plugins;
+    ".zbindkeys".source= ./configs/zbindkeys;
   };
 
 
@@ -172,9 +257,17 @@ in
     pandoc
     texlive.combined.scheme-full
     ####shell
+    antibody
+    fzf
+    grc
     libqalculate
     kitty
     screen
+    tmux
+    ####utils
+    git-crypt
+    killall
+    pass
     ####files
     ranger
     syncthing
