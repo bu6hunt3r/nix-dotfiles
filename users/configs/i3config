@@ -23,7 +23,7 @@ bindsym $mod+Shift+q kill
 # start dmenu
 bindsym $mod+d exec --no-startup-id rofi -show run -opacity 70
 
-focus_follows_mouse no
+focus_follows_mouse yes
 
 # change focus
 bindsym $mod+h focus left
@@ -114,7 +114,7 @@ bindsym $mod+Shift+e exec i3-msg exit
 # bindsym $mod+Shift+l exec "~/scripts/lock-screen.sh"
 
 # suspend
-# bindsym $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
+bindsym $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"
 
 # rofi-bluetooth
 # bindsym $mod+b exec --no-startup-id ~/.config/i3/polybar/scripts/rofi-bluetooth
@@ -190,7 +190,7 @@ client.urgent           #CB4B16 #FDF6E3 #CB4B16 $indcolor
 client.placeholder      #000000 #0c0c0c $txtacolor #000000
 client.background       #2B2C2B
 
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 2
 gaps inner 20
 
 # Pulse Audio controls
@@ -231,4 +231,4 @@ exec_always --no-startup-id ~/.config/polybar/polybar.sh
 # exec --no-startup-id redshift
 
 # start dunst daemon
-# exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc

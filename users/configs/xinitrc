@@ -1,16 +1,21 @@
-numlockx &
+# numlockx &
 xset r rate 300 30 &
-pgrep deluged || deluged &
-togglecompton &
-pgrep syncthing || syncthing -no-browser &
-pgrep controlmpd || controlmpd &
-pgrep -f "pactl subscribe" || pactlsubscribe.sh &
-pgrep -f "inotifywait /sys/class/power_supply/BAT0/" || batterymonitor &
-pgrep -f "nmcli monitor" || nmblocksmonitor &
-queueandnotify &
+# pgrep deluged || deluged &
+# togglecompton &
+# pgrep syncthing || syncthing -no-browser &
+# pgrep controlmpd || controlmpd &
+# pgrep -f "pactl subscribe" || pactlsubscribe.sh &
+# pgrep -f "inotifywait /sys/class/power_supply/BAT0/" || batterymonitor &
+# pgrep -f "nmcli monitor" || nmblocksmonitor &
+# queueandnotify &
 startdunst &
 rm /tmp/lockscreen.lock &
 rm /tmp/redshifttoggle.lock &
-screen -Dm -S weechat-screen weechat &
-pgrep xidlehook || xidlehook --not-when-audio --not-when-fullscreen --timer normal 1200 "lock.sh" "" &
+# screen -Dm -S weechat-screen weechat &
+# pgrep xidlehook || xidlehook --not-when-audio --not-when-fullscreen --timer normal 1200 "lock.sh" "" &
+#exec i3-dump-log --shmlog-size=26214400 
+#export SXHKD_SHELL=/run/current-system/sw/bin/zsh
+#exec sxhkd -c /home/$USER/.config/sxhkd/sxhkdrc &
+#exec bspwm -c ~/.config/bspwm/bspwmrc
+#exec compton --config ~/.config/compton/compton.conf
 exec i3

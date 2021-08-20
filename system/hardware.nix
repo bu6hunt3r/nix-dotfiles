@@ -11,28 +11,28 @@
   # kernel
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
   hardware.enableAllFirmware = true;
 
-  boot.initrd.luks.devices."enc-pv".device = "/dev/disk/by-uuid/f4931928-2a1c-44b7-a40b-4f6bfabd4739";
+  boot.initrd.luks.devices."enc-pv".device = "/dev/disk/by-uuid/78aa7e52-8da8-48aa-a7bf-2ae89d832e6b";
 
   
   # Enable sound.
   sound.enable = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f6f9a0f7-4716-4039-8063-0acf0fc7e9ff";
+    { device = "/dev/disk/by-uuid/15c6492f-b54d-41d5-8c3c-cfba7316083e";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8FA6-B8B6";
+    { device = "/dev/disk/by-uuid/D153-97CF";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/a09ac8de-5850-4873-a49f-bef1309db12a"; }
+    [ { device = "/dev/disk/by-uuid/6661b8c9-7e64-4073-8248-b5dff6825aa5"; }
     ];
 
   hardware = {
@@ -60,7 +60,7 @@
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = [ "intel" ];
   };
 
 }

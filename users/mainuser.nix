@@ -145,6 +145,7 @@ in
   };
 
   xdg.configFile = {
+    "bspwm/bspwmrc".source= ./configs/bspwmrc;
     "compton/compton.conf".source= ./configs/compton.conf;
     "css-collection/markdown.css".source= ./configs/cssmarkdown;
     "deluge/blocklist.conf".source= ./configs/delugeblocklist;
@@ -175,6 +176,7 @@ in
     "ranger/rifle.conf".source = ./configs/rangerrifle.conf;
     "ranger/scope.sh".source = ./configs/rangerscope.sh;
     "rofi/config.rasi".source = ./configs/config.rasi;
+    "sxhkd/sxhkdrc".source = ./configs/sxhkdrc;
     "transliteration/transliteration.html".source = ./configs/transliteration.html;
     "zathura/zathurarc".source = ./configs/zathurarc;
     "wal/templates/colorskitty.conf".source = ./share/templates/pywalkittytemplate;

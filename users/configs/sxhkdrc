@@ -1,0 +1,12 @@
+super + Return
+	kitty
+
+super + d
+	rofi -show run -opacity 70
+
+# close or kill app
+super + {_,shift +}c
+    bspc node {-c,-k}
+
+super + {_,shift + }{1-9}
+    bspc {desktop -f,node -d} '^{1-9}'
