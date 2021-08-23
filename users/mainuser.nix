@@ -143,6 +143,13 @@ in
     config = ./configs/polybarconfig;
     script="";
   };
+  
+  services.screen-locker = {
+    enable = true;
+    lockCmd = ''
+      ${pkgs.i3lock}/bin/i3lock -n -c 000000
+    '';
+  };
 
   xdg.configFile = {
     "compton/compton.conf".source= ./configs/compton.conf;
@@ -155,6 +162,7 @@ in
     "homepage/style.css".text= builtins.replaceStrings ["mainUser"] ["${mainUser}"] (builtins.readFile ./configs/homepage.css);
     "i3/config".source = ./configs/i3config;
     "i3/darkwing.jpg".source = ./configs/darkwing.jpg;
+    "i3/blured_darkwing.png".source = ./configs/blured_darkwing.png;
     "polybar/polybar.sh".source = ./configs/polybar.sh;
     "i3blocks/config".source = ./configs/i3blocksconfig;
     "kitty/kitty.conf".source = ./configs/kitty.conf;
@@ -222,6 +230,7 @@ in
     inotify-tools
     xdg_utils
     ####dev
+    emacs
     git
     ksshaskpass
     gawk
@@ -265,7 +274,12 @@ in
     screen
     tmux
     ####utils
+    bc
+    emacs
     git-crypt
+    gnumake
+    cmake
+    pkg-config
     killall
     pass
     ####files
@@ -316,6 +330,7 @@ in
     nix-prefetch-scripts
     nix-prefetch-github
     ##i3
+    i3lock-color
     #bemenu
     rofi
     #i3blocks
@@ -326,6 +341,7 @@ in
     redshift
     xidlehook
     xdotool
+    xorg.xdpyinfo
     xclip
     arandr
     alttab
@@ -339,5 +355,10 @@ in
     #kdeApplications.kio-extras
     ffmpegthumbs
     #kdeApplications.kdegraphics-thumbnailers
+    ##pwn
+    pwndbg
+    radare2
+    vagrant
+    virt-manager
   ];
 }

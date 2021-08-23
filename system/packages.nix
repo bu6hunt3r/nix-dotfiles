@@ -39,6 +39,7 @@
       polybar
       vimCustom
       xclip
+      emacsPgtkGcc
     ];
   };
 }

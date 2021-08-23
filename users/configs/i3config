@@ -111,7 +111,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec i3-msg exit
 
 # lock screen
-# bindsym $mod+Shift+l exec "~/scripts/lock-screen.sh"
+bindsym $mod+Shift+l exec "i3lock -c 000000 -i ~/.config/i3/blured_darkwing.png"
 
 # suspend
 # bindsym $mod+Shift+s exec "zenity --question --text 'DO YOU WANT TO SUSPEND ME MTHFCKR?' --ok-label 'Suspend' --cancel-label 'Noooo, sorry!' && systemctl suspend"

@@ -15,13 +15,15 @@ in
       };
       displayManager.startx.enable = true;
       layout = "de";
-      xkbOptions = "caps:swapescape";
+      #xkbOptions = "caps:swapescape";
     };
 
     #brightness control
     #illum.enable = true;
 
     autorandr.enable = true;
+
+    openssh.enable = true;
 
     # Maybe this one day will be useful
     # Enable CUPS to print documents.

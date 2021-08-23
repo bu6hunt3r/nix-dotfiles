@@ -12,7 +12,7 @@ in
   #cr0c0
   users.users.${mainUser} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "input" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "input" "video" "libvirtd" ];
     shell = pkgs.zsh;
   };
   home-manager.users.${mainUser} = import ./mainuser.nix ;

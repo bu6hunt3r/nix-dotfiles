@@ -12,6 +12,7 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
+  virtualisation.libvirtd.enable = true;
   boot.extraModulePackages = [ ];
   hardware.enableAllFirmware = true;
 
