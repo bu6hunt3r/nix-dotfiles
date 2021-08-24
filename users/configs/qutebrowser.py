@@ -1,5 +1,13 @@
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
+import dracula.draw
+
+dracula.draw.blood(c, {
+    'spacing': {
+        'vertical': 6,
+        'horizontal': 8
+    }
+})
 #Autoconfig {{{
 #Autoload options set from browser
 config.load_autoconfig()

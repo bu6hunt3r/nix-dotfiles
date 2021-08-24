@@ -21,7 +21,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id rofi -show run -opacity 70
+bindsym $mod+d exec --no-startup-id rofi -show drun -opacity 70 -show-icons -icon-theme "Papirus"
 
 focus_follows_mouse no
 

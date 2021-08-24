@@ -6,6 +6,9 @@ in
 {
   nixpkgs.config = import ../pkgs/nixpkgs-config.nix;
 
+  programs.go.enable = true;
+  programs.direnv.enable = true;
+
   programs.zsh.profileExtra = ''
     source ${nixosConfigDir}/users/configs/profile
   '';
@@ -178,6 +181,10 @@ in
     "qutebrowser/config.py".source= ./configs/qutebrowser.py;
     "qutebrowser/darksheet.css".source= ./configs/darksheet.css;
     "qutebrowser/jblock".source = builtins.fetchTarball "https://gitlab.com/jgkamat/jblock/-/archive/master/jblock-master.tar.gz";
+    "qutebrowser/dracual".source = builtins.fetchGit {
+      url = "https://github.com/dracula/qutebrowser.git";
+      rev = "ba5bd6589c4bb8ab35aaaaf7111906732f9764ef";
+    };
     "ranger/commands.py".source = ./configs/rangercommands.py;
     "ranger/rc.conf".source = ./configs/rangerrc.conf;
     "ranger/rifle.conf".source = ./configs/rangerrifle.conf;
@@ -245,9 +252,10 @@ in
     mpd
     mpdris2
     mpc_cli
-    ncmpcpp
     easytag
     spotify
+    spotifyd
+    spotify-tui
     ####video
     mpv
     kdenlive
@@ -274,6 +282,7 @@ in
     screen
     tmux
     ####utils
+    binutils
     bc
     emacs
     git-crypt
@@ -331,7 +340,12 @@ in
     nix-prefetch-github
     ##i3
     i3lock-color
+    papirus-icon-theme
     #bemenu
+    adapta-gtk-theme
+    gnome3.adwaita-icon-theme
+    xorg.xcursorthemes
+    lxappearance
     rofi
     #i3blocks
     #personalblocks
@@ -357,7 +371,6 @@ in
     #kdeApplications.kdegraphics-thumbnailers
     ##pwn
     pwndbg
-    radare2
     vagrant
     virt-manager
   ];
