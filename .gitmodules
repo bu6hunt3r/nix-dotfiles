@@ -1,0 +1,3 @@
+[submodule "users/share/userscripts/PyOrgMode"]
+	path = users/share/userscripts/PyOrgMode
+	url = https://github.com/bjonnh/PyOrgMode

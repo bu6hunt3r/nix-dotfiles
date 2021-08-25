@@ -212,6 +212,8 @@ in
     "qutebrowser/userscripts/configwithoutjblock".source = ./share/userscripts/configwithoutjblock;
     "qutebrowser/userscripts/follow4chan".source = ./share/userscripts/follow4chan;
     "qutebrowser/userscripts/updatecolors".source = ./share/userscripts/updatecolors;
+    "qutebrowser/userscripts/qute-capture".source = ./share/userscripts/qute-capture;
+    "qutebrowser/userscripts/PyOrgMode".source = ./share/userscripts/PyOrgMode;
   };
 
   home.file = {
@@ -241,6 +243,7 @@ in
     cabal-install
     cabal2nix
     haskellPackages.haskell-language-server
+    python-language-server
     ghc
     git
     ksshaskpass
@@ -249,6 +252,7 @@ in
     python3
     go
     gcc
+    rnix-lsp
     ####audio
     pavucontrol
     pulsemixer

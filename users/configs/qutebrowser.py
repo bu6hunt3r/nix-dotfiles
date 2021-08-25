@@ -150,6 +150,7 @@ config.bind(',ug', 'greasemonkey-reload')
 config.bind('E', 'open-editor')
 config.bind('tap', 'config-cycle content.autoplay true false ;; reload')
 config.bind(',D', 'hint all delete')
+config.bind(',b', 'spawn --userscript qute-capture read -f ~/read-later.org -H Read-Later')
 #Bindings And Commands End }}}
 
 #Other Options {{{
