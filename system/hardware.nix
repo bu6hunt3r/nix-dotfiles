@@ -40,7 +40,14 @@
     #sound
     pulseaudio.package = pkgs.pulseaudioFull;
     pulseaudio.enable = true;
-
+    bluetooth = {
+      enable = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
    #graphics
    opengl = {
      driSupport32Bit = true;

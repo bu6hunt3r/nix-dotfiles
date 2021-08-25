@@ -206,13 +206,16 @@ in
     "dox/latex/templates/article.tex".source = ./share/templates/article.tex;
     "dox/latex/templates/presentation.tex".source = ./share/templates/presentation.tex;
     #".tmux.conf".source = ./configs/tmux.conf;
+    ".doom.d/init.el".source = ./emacs/init.el;
+    ".doom.d/packages.el".source = ./emacs/packages.el;
+    ".doom.d/config.org".source = ./emacs/config.org;
+    ".doom.d/doom.png".source = ./emacs/doom.png;
+    ".doom.d/private.el.gpg".source = ./private/private.el.gpg;
     ".xinitrc".source = ./configs/xinitrc;
     ".calcurse/conf".source= ./configs/calcurseconf;
     ".zsh_plugins".source= ./configs/zsh_plugins;
     ".zbindkeys".source= ./configs/zbindkeys;
   };
-
-
 
   home.packages = with pkgs; [
     ####vim
@@ -224,6 +227,7 @@ in
     inotify-tools
     xdg_utils
     ####dev
+    emacs
     git
     ksshaskpass
     gawk
@@ -269,6 +273,7 @@ in
     ####utils
     git-crypt
     killall
+    nnn
     pass
     ####files
     ranger
@@ -341,5 +346,7 @@ in
     #kdeApplications.kio-extras
     ffmpegthumbs
     #kdeApplications.kdegraphics-thumbnailers
+    ##pwn
+    pwndbg
   ];
 }

@@ -8,6 +8,8 @@ in
     #Login prompt
     getty.helpLine = "If you're not cr0c0, Please leave this computer alone";
 
+    blueman.enable = true;
+
     xserver = {
       windowManager.i3 = {
         enable = true;
@@ -45,6 +47,8 @@ in
     cron.enable = true;
     #find files quickly
     locate.enable = true;
+    #smartcard daemon
+    pcscd.enable = true;
     # Power saving
     thermald.enable = true;
   };
