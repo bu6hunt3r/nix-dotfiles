@@ -181,7 +181,7 @@ in
     "qutebrowser/config.py".source= ./configs/qutebrowser.py;
     "qutebrowser/darksheet.css".source= ./configs/darksheet.css;
     "qutebrowser/jblock".source = builtins.fetchTarball "https://gitlab.com/jgkamat/jblock/-/archive/master/jblock-master.tar.gz";
-    "qutebrowser/dracual".source = builtins.fetchGit {
+    "qutebrowser/dracula".source = builtins.fetchGit {
       url = "https://github.com/dracula/qutebrowser.git";
       rev = "ba5bd6589c4bb8ab35aaaaf7111906732f9764ef";
     };
@@ -238,6 +238,10 @@ in
     xdg_utils
     ####dev
     emacs
+    cabal-install
+    cabal2nix
+    haskellPackages.haskell-language-server
+    ghc
     git
     ksshaskpass
     gawk
