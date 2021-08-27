@@ -10,7 +10,7 @@
 export PATH=$PATH:$HOME/.local/share/extrabin:$HOME/.local/bin:/usr/local/bin
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
-export EDITOR="nvim"
+export EDITOR="emacs"
 export READER="zathura"
 export TERMINAL="kitty"
 export BROWSER="qutebrowser"

@@ -301,6 +301,7 @@ in
     pass
     ####files
     ranger
+    silver-searcher
     syncthing
     jmtpfs
     unrar
