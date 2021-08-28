@@ -13,7 +13,7 @@ in
   boot.loader.grub.splashImage = ./splashscreen.png;
   
   #networking
-  networking.hostName = "faulobst"; #hostname
+  networking.hostName = "faulobst-x1"; #hostname
   networking.networkmanager.enable = true; # networking via networkmanager
 
   console = {
