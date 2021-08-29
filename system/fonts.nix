@@ -12,6 +12,7 @@
       terminus_font
       corefonts
       dejavu_fonts
+      iosevka
       jetbrains-mono
       noto-fonts
       noto-fonts-extra

@@ -256,3 +256,8 @@ Make scratchbuffer inherit the major mode of current buffer
 ;; (setq exec-path (append exec-path '("~/.cargo/bin")))
 #+end_src
 
+* ACTIVE direnv settings
+#+begin_src emacs-lisp
+(use-package direnv
+  :config (direnv-mode))
+#+end_src

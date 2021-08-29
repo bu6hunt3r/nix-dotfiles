@@ -5,6 +5,18 @@
 config.load_autoconfig()
 #AutoconfigEnd }}}
 
+import dracula.draw
+
+# Load existing settings made via :set
+config.load_autoconfig()
+
+dracula.draw.blood(c, {
+    'spacing': {
+        'vertical': 6,
+        'horizontal': 8
+    }
+})
+
 #Adblock {{{
 #adblock
 import sys, os
@@ -167,7 +179,7 @@ c.editor.command = ['kitty', '-e', 'nvim', '{}']
 
 c.url.default_page = f'file://{HOME}/.config/homepage/index.html'
 c.url.start_pages = [f'file://{HOME}/.config/homepage/index.html']
-
+c.url.default_page = '/tmp/startpage/index.html'
 c.url.open_base_url = True
 c.url.searchengines = {"DEFAULT": "https://www.google.com/search?q={}","&git":"https://github.com/search?type=Code&q={}","&rbt":"https://archive.rebeccablacktech.com/g/search/text/{}/","&wf": "https://fr.wikipedia.org/wiki/Spécial:Recherche?search={}","&we": "https://en.wikipedia.org/wiki/Special:Search?search={}","&py": "https://docs.python.org/3/search.html?q={}&check_keywords=yes&area=default"}
 

@@ -2,13 +2,36 @@
 
 let
   inherit (import ../variables.nix) nixosConfigDir mainUser;
+
+  p14s-backlight-inc = pkgs.writeShellScriptBin "backlight-increase" ''
+    brightnessctl s +10% && dunstify -r 6661 'increased brightness'
+  '';
+
+  p14s-backlight-dec = pkgs.writeShellScriptBin "backlight-decrease" ''
+    brightnessctl s -10% && dunstify -r 6661 'decreased brightness'
+  '';
+
 in
 {
+
+  virtualisation.docker.enable = true;
+
   services = {
     #Login prompt
     getty.helpLine = "If you're not cr0c0, Please leave this computer alone";
 
     blueman.enable = true;
+
+   acpid.handlers = {
+     "p14bl-inc" = {
+       action =  "${p14s-backlight-inc}/bin/backlight-increase";
+       event =  "video/brightnessup BRTUP 00000086 00000000";
+     };
+     "p14bl-dec" = {
+       action = "${p14s-backlight-dec}/bin/backlight-decrease";
+       event = "video/brightnessdown BRTDN 00000087 00000000";
+     };
+   };
 
     xserver = {
       windowManager.i3 = {

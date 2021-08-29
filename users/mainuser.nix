@@ -169,6 +169,7 @@ in
     "newsboat/config".source = ./configs/newsboatconfig;
     "nixpkgs/config.nix".source = ../pkgs/nixpkgs-config.nix;
     "qutebrowser/config.py".source= ./configs/qutebrowser.py;
+    "qutebrowser/dracula".source= ./share/qutebrowser/dracula;
     "qutebrowser/darksheet.css".source= ./configs/darksheet.css;
     "qutebrowser/jblock".source = builtins.fetchTarball "https://gitlab.com/jgkamat/jblock/-/archive/master/jblock-master.tar.gz";
     "ranger/commands.py".source = ./configs/rangercommands.py;
@@ -228,7 +229,9 @@ in
     xdg_utils
     ####dev
     emacs
+    direnv
     git
+    sqlite
     ksshaskpass
     gawk
     jq
@@ -274,6 +277,7 @@ in
     git-crypt
     killall
     nnn
+    silver-searcher
     pass
     ####files
     ranger

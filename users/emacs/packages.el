@@ -59,3 +59,4 @@
 (package! ascii-art-to-unicode)
 (package! company-posframe)
 (package! habitica)
+(package! direnv)

@@ -37,7 +37,8 @@
   environment = {
   systemPackages = with pkgs; [ 
       polybar
-      sxhkd
+      brightnessctl
+      acpid
       vimCustom
       xclip
     ];

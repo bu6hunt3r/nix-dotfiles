@@ -21,7 +21,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 
 # start dmenu
-bindsym $mod+d exec --no-startup-id rofi -show run -opacity 70
+bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons -opacity 70
 
 focus_follows_mouse no
 
@@ -194,15 +194,15 @@ for_window [class="^.*"] border pixel 0
 gaps inner 20
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
-bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
-bindsym XF86AudioMute        exec --no-startup-id pulseaudio-ctl mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -10%
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute 0 toggle
 
 # bindsym $mod+F1 exec playerctl play
 # bindsym $mod+F2 exec playerctl pause
 # Sreen brightness controls
-# bindsym XF86MonBrightnessUp exec --no-startup-id "sudo xbacklight -inc 10 && dunstify -r 6661 `xbacklight -get`"
-# bindsym XF86MonBrightnessDown exec --no-startup-id "sudo xbacklight -dec 10 && dunstify -r 6661 `xbacklight -get`"
+#bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl s +10% && dunstify -r 6661 'increased brightness'"
+#bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl s -10% && dunstify -r 6661 'decreased brightness'"
 
 # PrtScr btn
 # bindsym --release Print exec flameshot gui
