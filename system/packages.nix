@@ -39,6 +39,7 @@
       polybar
       brightnessctl
       acpid
+      wineWowPackages.stable
       vimCustom
       xclip
     ];

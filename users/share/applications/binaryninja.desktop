@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=BinaryNinja
+Comment=Launches Binary Ninja
+Icon=/nix/store/6n39h8ayf4g9skapn0mdz93i6pc2wx0h-binary-ninja/share/binary-ninja/docs/images/logo.png
+Exec=/nix/store/6n39h8ayf4g9skapn0mdz93i6pc2wx0h-binary-ninja/share/binary-ninja/binaryninja
+Categories=Pwn
+MimeType=inode/directory;
+Keywords=Pwn
