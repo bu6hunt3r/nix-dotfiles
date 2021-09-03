@@ -78,7 +78,7 @@ font-2 = "Font Awesome 5 Brands:style=Solid:size=6;1"
 modules-left = i3
 ;modules-center = player-mpv-tail
 ;modules-right = mediacontrol brightnesscustom volume battery memory cpu wifi vpncheck updates date
-modules-right = battery bluetooth volume fs-root memory cpu date
+modules-right = battery wifi volume fs-root memory cpu date
 
 wm-restack = bspwm
 
@@ -324,7 +324,7 @@ label-warn = TEMP %temperature-c%
 
 [module/wifi]
 type = internal/network
-interface = ${env:WIFIINTERFACE:wlp3s0}
+interface = ${env:WIFIINTERFACE:wlp8s0}
 interval = 3.0
 ;udspeed-minwidth = 0
 
@@ -406,7 +406,7 @@ ramp-headphones-foreground = #666
 [module/battery]
 type = internal/battery
 # from  ls -1 /sys/class/power_supply/
-battery = ${env:BATTERY:BAT0}
+battery = ${env:BATTERY:BAT1}
 adapter = ACAD
 full-at = 96
 time-format = (%H:%M)

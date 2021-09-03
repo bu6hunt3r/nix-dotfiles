@@ -6,7 +6,8 @@
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       inconsolata
-      font-awesome_4
+      fira-code
+      fira-mono
       font-awesome-ttf
       freefont_ttf
       terminus_font

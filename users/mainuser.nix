@@ -2,6 +2,7 @@
 
 let
   inherit (import ../variables.nix) nixosConfigDir mainUser;
+  inherit (import ./secrets.nix) mailAddress realName;
 in
 {
   nixpkgs.config = import ../pkgs/nixpkgs-config.nix;
@@ -9,7 +10,6 @@ in
   programs.zsh.profileExtra = ''
     source ${nixosConfigDir}/users/configs/profile
   '';
-
   manual.manpages.enable = false;
 
   programs.zsh.enable = true;
@@ -18,6 +18,56 @@ in
   programs.zsh.initExtra = ''
     source ${nixosConfigDir}/users/configs/zshrc
   '';
+
+  programs.git = {
+    enable = true;
+    userName = "bu6hunt3r";
+    userEmail = "bu6hunt3r@web.de";
+    signing = {
+      key = "509E1E2DB1BE50D9C8ACBC3D16B0756758A3E791";
+      signByDefault = true;
+    };
+    extraConfig = {
+      core = {
+        editor ="nvim";
+      };
+    };
+  };
+
+  programs.mbsync.enable = true;
+  programs.msmtp.enable = true;
+  programs.notmuch = {
+    enable = true;
+    hooks = {
+      preNew = "mbsync --all";
+    };
+  };
+
+  accounts.email = {
+    accounts.gmail = {
+      address = "${mailAddress}";
+      imap.host = "imap.gmail.com";
+      mbsync = {
+        enable = true;
+        create = "maildir";
+      };
+      msmtp.enable = true;
+      notmuch.enable = true;
+      primary = true;
+      realName = "${realName}";
+      signature = {
+        text = ''
+          Mit den besten Wünschen
+        '';
+        showSignature = "append";
+      };
+      passwordCommand = "pass ${mailAddress}";
+      smtp = {
+        host = "smtp.gmail.com";
+      };
+      userName = "${mailAddress}";
+    };
+  };
 
   programs.tmux = {
     enable = true;
@@ -170,6 +220,7 @@ in
     "nixpkgs/config.nix".source = ../pkgs/nixpkgs-config.nix;
     "qutebrowser/config.py".source= ./configs/qutebrowser.py;
     "qutebrowser/dracula".source= ./share/qutebrowser/dracula;
+    "qutebrowser/css".source= ./share/qutebrowser/css;
     "qutebrowser/darksheet.css".source= ./configs/darksheet.css;
     "qutebrowser/jblock".source = builtins.fetchTarball "https://gitlab.com/jgkamat/jblock/-/archive/master/jblock-master.tar.gz";
     "ranger/commands.py".source = ./configs/rangercommands.py;
@@ -210,7 +261,7 @@ in
     ".doom.d/init.el".source = ./emacs/init.el;
     ".doom.d/packages.el".source = ./emacs/packages.el;
     ".doom.d/config.org".source = ./emacs/config.org;
-    ".doom.d/doom.png".source = ./emacs/doom.png;
+    ".doom.d/doom.png".source = ./emacs/banners/doom.png;
     ".doom.d/private.el.gpg".source = ./private/private.el.gpg;
     ".xinitrc".source = ./configs/xinitrc;
     ".calcurse/conf".source= ./configs/calcurseconf;
@@ -271,6 +322,7 @@ in
     grc
     libqalculate
     kitty
+    cool-retro-term
     screen
     tmux
     ####utils
@@ -316,7 +368,6 @@ in
     notmuch
     lynx
     ####gaymen
-    nudoku
     openjdk
     ####misc
     #diary
@@ -352,5 +403,6 @@ in
     #kdeApplications.kdegraphics-thumbnailers
     ##pwn
     pwndbg
+    qemu
   ];
 }

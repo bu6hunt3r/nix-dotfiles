@@ -11,28 +11,21 @@
   # kernel
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "wl" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   hardware.enableAllFirmware = true;
-
-  boot.initrd.luks.devices."enc-pv".device = "/dev/disk/by-uuid/78aa7e52-8da8-48aa-a7bf-2ae89d832e6b";
 
   
   # Enable sound.
   sound.enable = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/15c6492f-b54d-41d5-8c3c-cfba7316083e";
+    { device = "/dev/disk/by-uuid/67f5ee01-4431-4592-9859-ed1f8fe18395";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D153-97CF";
-      fsType = "vfat";
-    };
-
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/6661b8c9-7e64-4073-8248-b5dff6825aa5"; }
+    [ { device = "/dev/disk/by-uuid/f4dbc86a-aea3-4415-9840-fbf818f76de3"; }
     ];
 
   hardware = {

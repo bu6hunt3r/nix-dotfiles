@@ -60,3 +60,4 @@
 (package! company-posframe)
 (package! habitica)
 (package! direnv)
+(package! nix-mode)

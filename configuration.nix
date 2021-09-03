@@ -10,7 +10,7 @@
     ./users/users.nix
   ];
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "21.11";
   nix.gc.automatic = true;
   nix.gc.dates = "18:00";
 }
