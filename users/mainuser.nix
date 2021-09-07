@@ -167,6 +167,8 @@ in
     "i3/darkwing.jpg".source = ./configs/darkwing.jpg;
     "i3/blured_darkwing.png".source = ./configs/blured_darkwing.png;
     "polybar/polybar.sh".source = ./configs/polybar.sh;
+    "polybar/scroll_spotify_status.sh".source = ./share/userscripts/scroll_spotify_status.sh;
+    "polybar/get_spotify_status.sh".source = ./share/userscripts/get_spotify_status.sh;
     "i3blocks/config".source = ./configs/i3blocksconfig;
     "kitty/kitty.conf".source = ./configs/kitty.conf;
     "mutt/mutt-wizard.muttrc".source = (builtins.toPath "${pkgs.mutt-wizard}/share/mutt-wizard.muttrc");
@@ -264,6 +266,8 @@ in
     spotify
     spotifyd
     spotify-tui
+    playerctl
+    zscroll
     ####video
     mpv
     kdenlive
