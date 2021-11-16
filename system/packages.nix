@@ -40,6 +40,7 @@
       vimCustom
       xclip
       emacsPgtkGcc
+      wineWowPackages.stable
     ];
   };
 }

@@ -5,6 +5,7 @@
     fontDir.enable = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
+      (nerdfonts.override {fonts = ["FiraCode"]; })
       inconsolata
       font-awesome_4
       font-awesome-ttf

@@ -15,6 +15,7 @@ in
   #networking
   networking.hostName = "faulobst"; #hostname
   networking.networkmanager.enable = true; # networking via networkmanager
+  # networking.nameservers = ["192.168.192.182"]; # custom nameserver
 
   console = {
     font = "Lat2-Terminus16";

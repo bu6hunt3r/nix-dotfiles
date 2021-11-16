@@ -13,6 +13,7 @@
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   virtualisation.libvirtd.enable = true;
+  # virtualisation.docker.enable = true;
   boot.extraModulePackages = [ ];
   hardware.enableAllFirmware = true;
 

@@ -25,6 +25,8 @@ in
 
     openssh.enable = true;
 
+    tor.enable = true;
+
     # Maybe this one day will be useful
     # Enable CUPS to print documents.
     printing.enable = true;

@@ -182,6 +182,8 @@ in
     "nixpkgs/config.nix".source = ../pkgs/nixpkgs-config.nix;
     "qutebrowser/config.py".source= ./configs/qutebrowser.py;
     "qutebrowser/darksheet.css".source= ./configs/darksheet.css;
+    "qutebrowser/apprentice-all-sites.css".source= ./configs/apprentice-all-sites.css;
+    "qutebrowser/solarized-dark-all-sites.css".source= ./configs/solarized-dark-all-sites.css;
     "qutebrowser/jblock".source = builtins.fetchTarball "https://gitlab.com/jgkamat/jblock/-/archive/master/jblock-master.tar.gz";
     "qutebrowser/dracula".source = builtins.fetchGit {
       url = "https://github.com/dracula/qutebrowser.git";
@@ -241,17 +243,20 @@ in
     inotify-tools
     xdg_utils
     ####dev
+    clojure
     emacs
     cabal-install
     cabal2nix
     haskellPackages.haskell-language-server
     python-language-server
+    gap
     ghc
     git
     ksshaskpass
     gawk
     jq
     python3
+    sqlite
     go
     gcc
     rnix-lsp
@@ -384,6 +389,7 @@ in
     #kdeApplications.kdegraphics-thumbnailers
     ##pwn
     pwndbg
+    proxychains
     vagrant
     virt-manager
   ];
